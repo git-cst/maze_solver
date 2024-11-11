@@ -1,14 +1,12 @@
-from graphics import Window, Cell, Line, Point
+from graphics import Window
+from cell import Cell
+from maze import Maze
+from constants import (WINDOW_SIZE, MAZE_START_X, MAZE_START_Y, MAZE_CELL_SIZE_X, MAZE_CELL_SIZE_Y, MAZE_COLS, MAZE_ROWS, MAZE_COLOUR)
 
 def main():
-    win = Window(800, 600)
-    cell1 = Cell(win)
-    cell1.has_right_wall = False
-    cell1.draw(177, 100, 277, 200, "blue")
-    cell2 = Cell(win)
-    cell2.has_left_wall = False
-    cell2.draw(277, 100, 377, 200, "black")
-    cell1.draw_move(cell2)
+    win = Window(WINDOW_SIZE)
+    maze = Maze(MAZE_START_X, MAZE_START_Y, MAZE_ROWS, MAZE_COLS, MAZE_CELL_SIZE_X, MAZE_CELL_SIZE_Y, MAZE_COLOUR, win)
+    maze._create_cells()
     win.wait_for_close()
 
 main()
