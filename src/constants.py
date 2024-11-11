@@ -1,0 +1,1 @@
+ACCEPTED_FILL_COLOURS = ["black", "grey", "red", "blue"]
