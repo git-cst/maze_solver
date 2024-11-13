@@ -1,5 +1,5 @@
 from tkinter import Tk, BOTH, Canvas
-from constants import ACCEPTED_FILL_COLOURS
+from constants import ACCEPTED_FILL_COLOURS, WINDOW_COLOUR, MAZE_LINE_WIDTH
 
 class Point():
     def __init__(self, x: int, y: int):
@@ -15,7 +15,7 @@ class Line():
         if fill_colour not in ACCEPTED_FILL_COLOURS:
             raise ValueError(f"Non-accepted fill colour was passed. Accepted fill colours are {ACCEPTED_FILL_COLOURS}")
         
-        canvas.create_line(self.point1.x, self.point1.y, self.point2.x, self.point2.y, fill=fill_colour, width=2)
+        canvas.create_line(self.point1.x, self.point1.y, self.point2.x, self.point2.y, fill=fill_colour, width=MAZE_LINE_WIDTH)
 
 class Window():
     def __init__(self, window_size: tuple[int, int]):
@@ -23,7 +23,7 @@ class Window():
         self.__root_widget.title("Maze solver")
         self.__root_widget.protocol("WM_DELETE_WINDOW", self.close)
 
-        self.__canvas_widget = Canvas(master=self.__root_widget, bg="white", width=window_size[0], height=window_size[1])
+        self.__canvas_widget = Canvas(master=self.__root_widget, bg=WINDOW_COLOUR, width=window_size[0], height=window_size[1])
         self.__canvas_widget.pack(fill=BOTH, expand=1)
 
         self.__running = False
