@@ -3,6 +3,15 @@ from graphics import Window
 from constants import ACCEPTED_FILL_COLOURS, WINDOW_COLOUR
 import time; import random
 
+def time_execution(func: function):
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        duration = end_time - start_time
+        print(f"{func.__name__} took {duration:.4f} seconds to execute.")
+        return result
+    return wrapper
 
 class Maze():
     def __init__(self, x1: int, y1: int, num_rows: int, num_cols: int, cell_size_x: int, cell_size_y: int, line_colour: str = None, win: Window = None, seed = None):
@@ -81,33 +90,38 @@ class Maze():
 
             next_cell: Cell = self._cells[ni][nj]
             if direction == 'up': # GO UP
-                i, j = i - 1, j
                 current_cell.has_top_wall = False
                 next_cell.has_bottom_wall = False
             elif direction == 'down': # GO DOWN
-                i, j = i + 1, j
                 current_cell.has_bottom_wall = False
                 next_cell.has_top_wall = False
             elif direction == 'left': # GO LEFT
-                i, j = i, j - 1
                 current_cell.has_left_wall = False
                 next_cell.has_right_wall = False
             elif direction == 'right': # GO RIGHT
-                i, j = i, j + 1
                 current_cell.has_right_wall = False
                 next_cell.has_left_wall = False
 
             i, j = ni, nj
             self._break_walls_r(i, j)
+    
+    @time_execution
+    def solve_maze(self, func):
+        algorithms = ["DFS", "BFS", "a_star"]
 
-    def solve_DFS(self):
-        pass
+        if func in algorithms:
+            return getattr(self, func)()
+        else:
+            return f"Unknown algorithm chosen. Implemented algorithms are {', '.join(algorithms)}"
 
-    def solve_BFS(self):
-        pass
+    def DFS(self):
+        time.sleep(1)
 
-    def solve_a_star(self):
-        pass
+    def BFS(self):
+        time.sleep(1)
+
+    def a_star(self):
+        time.sleep(1)
 
     def _reset_visited(self):
         for i in range(0, self.__num_rows):

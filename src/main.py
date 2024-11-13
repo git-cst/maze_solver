@@ -12,6 +12,9 @@ def main():
     maze._break_entrance_and_exit()
     maze._break_walls_r()
     maze._reset_visited()
+    print(maze.solve_maze("DFS"))
+    print(maze.solve_maze("BFS"))
+    print(maze.solve_maze("a_star"))
     win.wait_for_close()
 
 main()
