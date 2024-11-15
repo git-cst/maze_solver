@@ -45,15 +45,15 @@ class Cell():
             self.__win.draw_line(Line(Point(self._x1, self._y2), Point(self._x2, self._y2)), WINDOW_COLOUR)
             
 
-    def draw_move(self, to_cell, undo: bool=False):
+    def draw_move(self, to_cell, undo: bool=False, fill_colour = "red", offset = 0):
         if self.__win == None:
             return 
         
-        fill_colour = "red" if undo is False else "grey"
+        fill_colour = fill_colour if not undo else "grey"
 
-        center_position_x = self._x2 - (self._x2 - self._x1) / 2
-        center_position_y = self._y2 - (self._y2 - self._y1) / 2
-        to_cell_center_position_x = to_cell._x2 - (to_cell._x2 - to_cell._x1) / 2
-        to_cell_center_position_y = to_cell._y2 - (to_cell._y2 - to_cell._y1) / 2
+        center_position_x = (self._x1 + self._x2) / 2 + offset
+        center_position_y = (self._y1 + self._y2) / 2 + offset
+        to_cell_center_position_x = (to_cell._x1 + to_cell._x2) / 2 + offset
+        to_cell_center_position_y = (to_cell._y1 + to_cell._y2) / 2 + offset
 
         self.__win.draw_line(Line(Point(center_position_x, center_position_y), Point(to_cell_center_position_x, to_cell_center_position_y)), fill_colour)
