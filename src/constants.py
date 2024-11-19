@@ -1,5 +1,5 @@
 #GRAPHICS CONSTANTS
-ACCEPTED_FILL_COLOURS = ["black", "grey", "red", "blue", "orange", "white"]
+ACCEPTED_FILL_COLOURS = ["black", "grey", "red", "blue", "orange", "green", "white"]
 
 #MAZE CONSTANTS
 MAZE_START_X = 10
@@ -7,7 +7,7 @@ MAZE_START_Y = 10
 MAZE_CELL_SIZE_X = 30
 MAZE_CELL_SIZE_Y = 30
 MAZE_COLS = 40
-MAZE_ROWS = 50
+MAZE_ROWS = 40
 MAZE_COLOUR = "black"
 MAZE_LINE_WIDTH = MAZE_CELL_SIZE_X // 30
 

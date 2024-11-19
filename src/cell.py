@@ -1,5 +1,5 @@
 from graphics import Window, Point, Line
-from constants import ACCEPTED_FILL_COLOURS, WINDOW_COLOUR
+from constants import ACCEPTED_FILL_COLOURS, WINDOW_COLOUR, MAZE_LINE_WIDTH
 
 class Cell():
     def __init__(self, window: Window = None):
