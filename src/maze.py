@@ -161,51 +161,48 @@ class Maze():
         
     def BFS(self, i: int = 0, j: int = 0, fill_colour = "red", offset: int = 0):
         ################### TO DO ######################
-        # - FIX GRAPHICS
-        #    - THE CELLS ARE NOT BEING PROPERLY TRACKED
-        # - TRACK THE COST OF THE PATH?
-        #    - IMPLEMENT IF IT THINKS IT'S BACKTRACKING?
+        # - IMPLEMENT IF IT THINKS IT'S BACKTRACKING?
+        #   - HAVE TO TRACK IF IT IS BACKTRACKING TO AN ACTIVELY BEING EXPLORED PATH
+        #   - WILL SLOW DOWN THE SOLUTION A BIT AS IT IS NOW WASTING TIME ON BACKTRACKING FOR "OUR" VISUAL ENJOYMENT...
 
         visited = []
         to_visit = []
-        start_position = [self._cells[i][j], i, j]
+        start_position = [self._cells[i][j], i, j, None]
         to_visit.append(start_position)
 
         unsolved = True
         while unsolved:
             self._animate_self()
             neighbouring_cells = []
-            try:
-                previous_cell = position_cell
-            except:
-                previous_cell = None
+            
+            new_position: tuple[Cell, int, int, Cell]     = to_visit.pop(0)
+            current_cell: Cell                            = new_position[0]
+            current_column: int                           = new_position[1]
+            current_row: int                              = new_position[2]
+            parent_cell: Cell                             = new_position[3]
 
-            new_position: tuple[Cell, int, int]     = to_visit.pop(0)
-            position_cell: Cell                     = new_position[0]
-            position_column: int                    = new_position[1]
-            position_row: int                       = new_position[2]
-
-            if previous_cell:
-                position_cell.visited = True
-                previous_cell.draw_move(position_cell, fill_colour=fill_colour, offset=offset)
+            if parent_cell:
+                current_cell.visited = True
+                parent_cell.draw_move(current_cell, fill_colour=fill_colour, offset=offset)
 
             visited.append(new_position)
-            i, j = position_column, position_row
+            i, j = current_column, current_row
 
             if i == len(self._cells) - 1 and j == len(self._cells[0]) - 1:
                 unsolved = False
+                continue
 
-            if i > 0 and not self._cells[i - 1][j].visited and position_cell.has_top_wall == False: # UP
-                neighbouring_cells.append([self._cells[i - 1][j], i - 1, j])
+            if i > 0 and not self._cells[i - 1][j].visited and current_cell.has_top_wall == False: # UP
+                neighbouring_cells.append([self._cells[i - 1][j], i - 1, j, current_cell])
 
-            if i < len(self._cells) - 1 and not self._cells[i + 1][j].visited and position_cell.has_bottom_wall == False: # DOWN
-                neighbouring_cells.append([self._cells[i + 1][j], i + 1, j])
+            if i < len(self._cells) - 1 and not self._cells[i + 1][j].visited and current_cell.has_bottom_wall == False: # DOWN
+                neighbouring_cells.append([self._cells[i + 1][j], i + 1, j, current_cell])
 
-            if j > 0 and not self._cells[i][j - 1].visited and position_cell.has_left_wall == False: # LEFT
-                neighbouring_cells.append([self._cells[i][j - 1], i, j - 1])
+            if j > 0 and not self._cells[i][j - 1].visited and current_cell.has_left_wall == False: # LEFT
+                neighbouring_cells.append([self._cells[i][j - 1], i, j - 1, current_cell])
 
-            if j < len(self._cells[0]) - 1 and not self._cells[i][j + 1].visited and position_cell.has_right_wall == False: # RIGHT
-                neighbouring_cells.append([self._cells[i][j + 1], i, j + 1])        
+            if j < len(self._cells[0]) - 1 and not self._cells[i][j + 1].visited and current_cell.has_right_wall == False: # RIGHT
+                neighbouring_cells.append([self._cells[i][j + 1], i, j + 1, current_cell])        
 
             for cell in neighbouring_cells:
                 if cell not in visited and cell not in to_visit:
